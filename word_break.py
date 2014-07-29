@@ -3,6 +3,29 @@ class Solution:
     # @param dict, a set of string
     # @return a boolean
     def wordBreak(self, s, dict):
+        return self.check(s, dict)
+        
+    def check(self, s, dict):
+        dp = [False] * (len(s)+1)
+    
+        index = 0
+        dp[0] = (s[0] in dict)
+        dp[-1] = True
+        for c in s:
+            for str in dict:
+                if str.endswith(c) and index > len(str)-2:
+                    dp[index] = dp[index-len(str)]
+                if dp[index]:
+                    break
+            index+=1
+    
+        return dp[len(s)-1]
+
+class Solution:
+    # @param s, a string
+    # @param dict, a set of string
+    # @return a boolean
+    def wordBreak(self, s, dict):
         dict = self.trim(list(dict))
         return self.check(s, dict)
         
